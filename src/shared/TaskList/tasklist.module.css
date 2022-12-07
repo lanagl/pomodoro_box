@@ -1,0 +1,11 @@
+.taskList {
+	width: 370px;
+}
+
+.total {
+	font-weight: 300;
+	font-size: 16px;
+	line-height: 17px;
+	color: var(--text-input);
+	margin-top: 19px;
+}

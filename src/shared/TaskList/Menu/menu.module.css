@@ -1,0 +1,40 @@
+.menuContainer {
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+}
+
+.menu {
+	background: #FFFFFF;
+	border: 1px solid var(--border-C4);
+	display: flex;
+	flex-direction: column;
+	margin-top: -6px;
+	padding-top: 6px;
+}
+
+.menuItem {
+	font-weight: 300;
+	font-size: 16px;
+	line-height: 17px;
+	color: var(--text-input);
+	display: inline-flex;
+	column-gap: 9px;
+	padding: 9px 15px;
+	cursor: pointer;
+	z-index: 10;
+}
+
+.menuItem:hover {
+	background-color: var(--background-light-grey);
+}
+
+.triangle {
+	width: 10px;
+	height: 10px;
+	border-bottom: 1px solid var(--border-C4);
+	border-right: 1px solid var(--border-C4);
+	transform: rotate(225deg);
+	align-self: center;
+	background: #FFFFFF;
+}

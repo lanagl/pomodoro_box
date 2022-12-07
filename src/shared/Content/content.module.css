@@ -1,0 +1,80 @@
+.content {
+	padding: 100px 80px;
+}
+
+.pomodoroBox {
+	display: flex;
+	column-gap: 16px;
+}
+
+.leftSide {
+	display: flex;
+	flex-direction: column;
+	row-gap: 25px;
+	flex: 1 1 40%;
+}
+
+.description {
+	display: flex;
+	flex-direction: column;
+	row-gap: 3px;
+
+}
+
+.descriptionTitle {
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 33px;
+}
+
+
+.list {
+	margin: 0;
+	padding: 0;
+	font-size: 16px;
+	line-height: 33px;
+	list-style-position: inside;
+}
+
+.list li {
+	display: flex;
+}
+
+.list li:before {
+	content: '';
+	list-style-type: disc;
+	display: list-item;
+	color: var(--list-marker);
+	margin-right: 15px;
+	width: 8px;
+}
+
+.pomodoroForm {
+	display: flex;
+	flex-direction: column;
+	row-gap: 25px;
+}
+
+.submit {
+	width: fit-content;
+}
+
+.inputField {
+	padding: 19px 15px;
+	border: none;
+	background-color: var(--background-light-grey);
+	color: var(--text-primary);
+	font-weight: 300;
+	font-size: 16px;
+	line-height: 17px;
+	width: 370px;
+	box-sizing: border-box;
+}
+
+.inputField::placeholder {
+	color: var(--text-input);
+}
+
+.rightSide {
+	flex: 1 1 57%;
+}

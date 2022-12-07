@@ -1,0 +1,18 @@
+:root {
+	--text-red: #DC3E22;
+	--text-red-hover: #B7280F;
+	--text-primary: #333333;
+	--text-button: #FFFFFF;
+	--text-input: #999999;
+
+	--list-marker: #B7280F;
+
+	--background-grey: #C4C4C4;
+	--background-light-grey: #F4F4F4;
+	--background-green: #A8B64F;
+	--background-dark-green: #899441;
+	--background-red: #DC3E22;
+
+	--border-C4: #C4C4C4;
+	--border-E4: #E4E4E4;
+}

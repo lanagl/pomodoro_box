@@ -1,0 +1,47 @@
+.timerBox {
+
+}
+
+.timerTitle {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	color: #fff;
+	background: var(--background-grey);
+	padding: 0 40px;
+	height: 55px;
+	font-size: 16px;
+	line-height: 17px;
+}
+
+.timerContent {
+	background-color: var(--background-light-grey);
+	padding: 70px;
+	row-gap: 32px;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+
+.taskNum {
+	color: var(--text-input);
+}
+
+.taskDesc {
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 17px;
+}
+
+.timer {
+	font-weight: 200;
+	font-size: 150px;
+	line-height: 179px;
+	text-align: center;
+}
+
+.buttonGroup {
+	display: flex;
+	justify-content: center;
+	column-gap: 25px;
+}

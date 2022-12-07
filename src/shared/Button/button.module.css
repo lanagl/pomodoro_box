@@ -1,0 +1,56 @@
+.button {
+	padding: 18px 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 17px;
+}
+
+.button.disabled {
+	border: 1px solid var(--background-grey);
+	color: var(--background-grey);
+	cursor: default;
+	pointer-events: none;
+}
+
+.red {
+	background-color: var(--background-red);
+	border: 1px solid var(--background-red);
+	color: var(--text-button);
+}
+
+.green {
+	background-color: var(--background-green);
+	border: 1px solid var(--background-green);
+	color: var(--text-button);
+}
+
+.green:hover {
+	background-color: var(--background-dark-green);
+	border: 1px solid var(--background-dark-green);
+}
+
+.tred {
+	border: 1px solid var(--background-red);
+	color: var(--background-red);
+}
+
+.tred:hover {
+	background-color: var(--background-red);
+	border: 1px solid var(--background-red);
+	color: var(--text-button);
+}
+
+.tgreen {
+	border: 1px solid var(--background-green);
+	color: var(--background-green);
+}
+
+.tgreen:hover {
+	background-color: var(--background-green);
+	border: 1px solid var(--background-green);
+	color: var(--text-button);
+}

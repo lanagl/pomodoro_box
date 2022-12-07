@@ -1,0 +1,37 @@
+.listItem {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-top: 1px solid var(--border-E4);
+	border-bottom: 1px solid var(--border-E4);
+	padding: 15px 0;
+}
+
+.taskInfo {
+	display: flex;
+	column-gap: 10px;
+	align-items: center;
+}
+
+.count {
+	border-radius: 100%;
+	border: 1px solid var(--border-C4);
+	font-weight: 300;
+	font-size: 16px;
+	line-height: 17px;
+	width: 25px;
+	height: 25px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.description {
+	font-weight: 300;
+	font-size: 16px;
+	line-height: 17px;
+}
+
+.menuIcon {
+	cursor: pointer;
+}

@@ -1,0 +1,29 @@
+.statisticBar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.title {
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 33px;
+}
+
+.select {
+	background: var(--background-light-grey);
+	border: none;
+	width: 370px;
+	padding: 19px 15px;
+	align-items: center;
+	display: grid;
+	box-shadow: 0px 10px 63px rgba(0, 0, 0, 0.07);
+}
+
+.select:after {
+
+}
+
+.select option {
+	padding: 19px 15px;
+}

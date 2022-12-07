@@ -46,7 +46,7 @@ export const TimerBox = observer(() => {
 
     function handleFinish() {
         if (currentItem) {
-            taskListStore.setFinished(currentItem.id, settingsStore.pomodoroTime * currentItem.count - time - (pomodoro - 1 * settingsStore.pomodoroTime))
+            taskListStore.setFinished(currentItem.id, settingsStore.pomodoroTime * currentItem.count - time - ((pomodoro - 1) * settingsStore.pomodoroTime))
         }
 
     }

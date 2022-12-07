@@ -7,4 +7,5 @@ interface ITaskItem {
     finish: boolean;
     completedTime: number;
     order: number;
+    startDate: number;
 }

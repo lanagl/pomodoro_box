@@ -1,0 +1,4 @@
+.chart {
+	grid-area: chart;
+	background-color: var(--background-light-grey);
+}

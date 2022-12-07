@@ -2,13 +2,13 @@ export function calcTime(time: number): string {
     const days: number = Math.floor(time / (60 * 60 * 24))
     if (days <= 0) {
         const afterDays: number = (time % (60 * 60 * 24))
-        const hours = Math.ceil(afterDays / (60 * 60))
+        const hours = Math.floor(afterDays / (60 * 60))
         if (hours <= 0) {
             const afterHours = afterDays % (60 * 60)
-            const minute: number = Math.ceil(afterHours / (60))
+            const minute: number = Math.floor(afterHours / (60))
             if (minute <= 0) {
                 const afterMinute: number = afterHours % (60)
-                const seconds: number = Math.ceil(afterMinute / (60))
+                const seconds: number = Math.floor(afterMinute / (60))
                 return `${seconds} ${caseText(seconds, 's')}`
             } else {
                 return `${minute} ${caseText(minute, 'm')}`

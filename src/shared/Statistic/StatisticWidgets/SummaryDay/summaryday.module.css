@@ -1,0 +1,24 @@
+.summary {
+	grid-area: summaryDay;
+	background-color: var(--background-light-grey);
+	padding: 25px;
+	display: flex;
+	flex-direction: column;
+	row-gap: 14px;
+}
+
+.labelOfDay {
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 33px;
+}
+
+.description {
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 28px;
+}
+
+.time {
+	color: var(--text-red);
+}

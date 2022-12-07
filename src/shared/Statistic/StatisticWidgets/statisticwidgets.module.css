@@ -1,0 +1,28 @@
+.container {
+	display: grid;
+	grid-template-areas: 'summaryDay chart' 'summaryPomodoro chart' 'bottomWidgets bottomWidgets';
+	grid-template-rows: 260px 179px;
+	grid-template-columns: 296px 952px;
+	gap: 32px;
+}
+
+.bottomWidgets {
+	display: grid;
+	grid-area: bottomWidgets;
+	grid-template-areas: 'focus paused stopped';
+	grid-template-rows: 179px;
+	grid-template-columns: 1fr 1fr 1fr;
+	gap: 32px;
+}
+
+.focus {
+	grid-area: focus;
+}
+
+.paused {
+	grid-area: paused;
+}
+
+.stopped {
+	grid-area: stopped;
+}

@@ -1,6 +1,6 @@
 .container {
 	padding: 25px;
-	background-color: var(--background-light-grey);
+
 	display: flex;
 	justify-content: space-between;
 }
@@ -26,4 +26,12 @@
 
 .icon {
 
+}
+
+.inactive {
+	background-color: var(--background-light-grey);
+}
+
+.inactive path {
+	stroke: var(--border-C4);
 }

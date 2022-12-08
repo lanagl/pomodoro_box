@@ -17,12 +17,15 @@
 
 .focus {
 	grid-area: focus;
+	background-color: var(--background-focus);
 }
 
 .paused {
 	grid-area: paused;
+	background-color: var(--background-pause);
 }
 
 .stopped {
 	grid-area: stopped;
+	background-color: var(--background-stop);
 }

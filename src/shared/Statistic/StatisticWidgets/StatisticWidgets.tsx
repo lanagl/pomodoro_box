@@ -16,9 +16,9 @@ export function StatisticWidgets() {
             <SummaryDay/>
             <SummaryPomodoro/>
             <div className={styles.bottomWidgets}>
-                <BottomWidget title="Фокус" icon={<Focus/>} text="35%" className={styles.focus}/>
-                <BottomWidget title="Время на паузе" icon={<Clock/>} text="9м" className={styles.paused}/>
-                <BottomWidget title="Остановки" icon={<AlarmClock/>} text="3" className={styles.stopped}/>
+                <BottomWidget title="Фокус" icon={<Focus/>} value={35} unit={"%"} className={styles.focus}/>
+                <BottomWidget title="Время на паузе" icon={<Clock/>} value={9} unit={"м"} className={styles.paused}/>
+                <BottomWidget title="Остановки" icon={<AlarmClock/>} value={3} className={styles.stopped}/>
             </div>
 
         </div>

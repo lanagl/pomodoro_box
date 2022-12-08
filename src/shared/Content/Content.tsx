@@ -37,7 +37,7 @@ export const Content = observer(() => {
             started: false,
             paused: false,
             completedTime: 0,
-            startDate: new Date().getTime(),
+            startDate: Date.now(),
             order: getMaxOrder(taskListStore.taskList) + 1
         }
         taskListStore.addItem(generateId(item));

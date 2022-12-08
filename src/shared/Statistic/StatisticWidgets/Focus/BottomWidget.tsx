@@ -6,18 +6,19 @@ import classNames from "classnames";
 
 interface IBottomWidgetProps {
     title: string;
-    text: string;
+    value: number;
     icon: ReactElement
     className?: string;
+    unit?: string;
 }
 
-export const BottomWidget = observer(({title, text, icon, className = ""}: IBottomWidgetProps) => {
+export const BottomWidget = observer(({title, value, icon, unit, className = ""}: IBottomWidgetProps) => {
     const {statisticStore} = useStores()
     return (
-        <div className={classNames(styles.container, className)}>
+        <div className={classNames(styles.container, className, {[styles.inactive]: !value})}>
             <div className={styles.left}>
                 <div className={styles.title}>{title}</div>
-                <div className={styles.text}>{text}</div>
+                <div className={styles.text}>{value}{unit && unit}</div>
             </div>
             <div className={styles.icon}>
                 {icon}

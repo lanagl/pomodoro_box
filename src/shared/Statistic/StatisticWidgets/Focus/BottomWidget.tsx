@@ -1,7 +1,5 @@
 import React, {ReactElement} from 'react';
 import styles from './bottomwidget.module.css';
-import {observer} from "mobx-react-lite";
-import {useStores} from "../../../../store/use-stores";
 import classNames from "classnames";
 
 interface IBottomWidgetProps {
@@ -12,8 +10,7 @@ interface IBottomWidgetProps {
     unit?: string;
 }
 
-export const BottomWidget = observer(({title, value, icon, unit, className = ""}: IBottomWidgetProps) => {
-    const {statisticStore} = useStores()
+export const BottomWidget = ({title, value, icon, unit, className = ""}: IBottomWidgetProps) => {
     return (
         <div className={classNames(styles.container, className, {[styles.inactive]: !value})}>
             <div className={styles.left}>
@@ -27,4 +24,4 @@ export const BottomWidget = observer(({title, value, icon, unit, className = ""}
 
         </div>
     );
-})
+}

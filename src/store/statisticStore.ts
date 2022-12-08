@@ -71,7 +71,13 @@ export class StatisticStore {
     }
 
     setCurrentDayOfWeek(day: DaysOfWeek) {
-        this.currentDayOfWeek = day
+        const dayOfWeek = day ? day : 7;
+        this.currentDayOfWeek = dayOfWeek;
+        const currentDay = new Date(this.startDay)
+        const currentDayStart = setStartTime(currentDay, 0)
+        const currentDayEnd = setEndTime(currentDay, 0)
+        console.log("currentDayStart=", currentDayStart, ", currentDayEnd=", currentDayEnd)
+
     }
 
     setCompleteTime() {

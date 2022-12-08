@@ -13,6 +13,7 @@ export const TimerBox = observer(() => {
     const [seconds, setSeconds] = useState<number>(0);
     const [time, setTime] = useState<number>(settingsStore.pomodoroTime);
     const [started, setStarted] = useState(false);
+    const [pausedTime, setPausedTime] = useState(0);
 
 
     useEffect(() => {
@@ -24,10 +25,6 @@ export const TimerBox = observer(() => {
         setStarted(false)
     }, [settingsStore.pomodoroTime, taskListStore.currentItem]);
 
-    function getTime() {
-        setMinutes(Math.floor((time / 1000 / 60) % 60));
-        setSeconds(Math.floor((time / 1000) % 60));
-    }
 
     function handleStartTimer() {
         if (currentItem) {
@@ -36,9 +33,11 @@ export const TimerBox = observer(() => {
                 setStarted(true)
             } else if (!currentItem.paused) {
                 taskListStore.setPaused(currentItem.id)
+                setPausedTime(Date.now)
                 setStarted(false)
             } else {
-                taskListStore.setResume(currentItem.id)
+                const pauseTime = Date.now() - pausedTime;
+                taskListStore.setResume(currentItem.id, pauseTime)
                 setStarted(true)
             }
         }
@@ -55,15 +54,19 @@ export const TimerBox = observer(() => {
         let interval: NodeJS.Timer;
         if (started && currentItem) {
             interval = setInterval(() => {
-                setTime(time - 1000)
-                getTime()
+                setTime(time - 1000);
             }, 1000);
         }
 
         return () => {
             clearInterval(interval)
         };
-    }, [currentItem, getTime, started, time]);
+    }, [currentItem, started, time]);
+
+    React.useEffect(() => {
+        setMinutes(Math.floor((time / 1000 / 60) % 60));
+        setSeconds(Math.floor((time / 1000) % 60));
+    }, [time]);
 
 
     return (

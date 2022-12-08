@@ -7,9 +7,12 @@ import {SummaryPomodoro} from "./SummaryPomodoro";
 import {ReactComponent as Focus} from "../../../images/focus.svg";
 import {ReactComponent as Clock} from "../../../images/clock.svg";
 import {ReactComponent as AlarmClock} from "../../../images/alarm-clock.svg";
+import {observer} from "mobx-react-lite";
+import {useStores} from "../../../store/use-stores";
 
 
-export function StatisticWidgets() {
+export const StatisticWidgets = observer(() => {
+    const {statisticStore} = useStores()
     return (
         <div className={styles.container}>
             <Chart/>
@@ -23,4 +26,4 @@ export function StatisticWidgets() {
 
         </div>
     );
-}
+})

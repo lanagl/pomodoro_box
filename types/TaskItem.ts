@@ -8,4 +8,7 @@ interface ITaskItem {
     completedTime: number;
     order: number;
     startDate: number;
+    pauseCount: number;
+    pauseTime: number;
+    finishedPomodoro: number;
 }

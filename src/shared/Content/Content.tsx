@@ -36,7 +36,10 @@ export const Content = observer(() => {
             count: 1,
             started: false,
             paused: false,
+            pauseCount: 0,
+            pauseTime: 0,
             completedTime: 0,
+            finishedPomodoro: 0,
             startDate: Date.now(),
             order: getMaxOrder(taskListStore.taskList) + 1
         }

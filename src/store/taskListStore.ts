@@ -92,13 +92,15 @@ export class TaskListStore {
         const task = this.taskList.find(task => task.id === itemId)
         if (task) {
             task.paused = true
+            task.pauseCount = task.pauseCount + 1
         }
     }
 
-    setResume(itemId: string) {
+    setResume(itemId: string, pauseTime: number) {
         const task = this.taskList.find(task => task.id === itemId)
         if (task) {
             task.paused = false
+            task.pauseTime = task.pauseTime + pauseTime;
         }
     }
 
@@ -107,6 +109,7 @@ export class TaskListStore {
         if (task) {
             task.finish = true
             task.completedTime = time
+            task.finishedPomodoro = task.finishedPomodoro + 1
         }
         this.getFilteredList()
         this.getFinishedList()

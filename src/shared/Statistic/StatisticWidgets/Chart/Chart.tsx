@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import styles from './chart.module.css';
 import {Bar} from "react-chartjs-2";
-import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip,} from 'chart.js';
 import {useStores} from "../../../../store/use-stores";
+import {observer} from "mobx-react-lite";
+import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip,} from 'chart.js';
 
 ChartJS.register(
     CategoryScale,
@@ -14,22 +15,15 @@ ChartJS.register(
 );
 export const options = {
     responsive: true,
-    plugins: {
-        legend: {
-            position: 'top' as const,
-        },
-        title: {
-            display: true,
-            text: 'Chart.js Bar Chart',
-        },
-    },
+    plugins: {},
 };
 
 const labels = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 
-export function Chart() {
-    const {taskListStore} = useStores()
+export const Chart = observer(() => {
+    const {taskListStore, statisticStore} = useStores()
     const [dataset, setDataset] = useState<Array<ITaskItem>>([]);
+    const chartRef = useRef(null)
 
     useEffect(() => {
         setDataset(taskListStore.finishedList)
@@ -48,9 +42,20 @@ export function Chart() {
             },
         ],
     };
+    const onClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
+        if (chartRef.current) {
+            //statisticStore.setCurrentDayOfWeek(chartRef.current)
+        }
+    }
+
     return (
         <div className={styles.chart}>
-            <Bar options={options} data={data}/>
+            <Bar
+                options={options}
+                data={data}
+                ref={chartRef}
+                onClick={onClick}
+            />
         </div>
     );
-}
+})

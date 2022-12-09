@@ -8,7 +8,7 @@ export function calcTime(time: number): string {
             const minute: number = Math.floor(afterHours / (60))
             if (minute <= 0) {
                 const afterMinute: number = afterHours % (60)
-                const seconds: number = Math.floor(afterMinute / (60))
+                const seconds: number = Math.floor(afterMinute)
                 return `${seconds} ${caseText(seconds, 's')}`
             } else {
                 return `${minute} ${caseText(minute, 'm')}`
@@ -25,69 +25,50 @@ export function calcTime(time: number): string {
 export function caseText(num: number, prefix: 'd' | 'h' | 'm' | 's') {
     switch (prefix) {
         case "d":
-            if (num > 10 && num < 20) {
+            if (num > 10) {
                 return "дней"
             } else {
                 const rem = divideTen(num);
-                if (rem < 10) {
-                    if (rem === 1) {
-                        return "день"
-                    } else if (rem > 1 && rem < 5) {
-                        return "дня"
-                    } else if (rem >= 5 || rem === 0) {
-                        return "дней"
-                    }
+                if (rem === 1) {
+                    return "дня"
+                } else {
+                    return "дней"
                 }
             }
-            break;
         case "h":
-            if (num > 10 && num < 20) {
+            if (num > 10) {
                 return "часов"
             } else {
                 const rem = divideTen(num);
-                if (rem < 10) {
-                    if (rem === 1) {
-                        return "час"
-                    } else if (rem > 1 && rem < 5) {
-                        return "часа"
-                    } else if (rem >= 5 || rem === 0) {
-                        return "часов"
-                    }
+
+                if (rem === 1) {
+                    return "часа"
+                } else {
+                    return "часов"
                 }
             }
-            break;
         case "m":
-            if (num > 10 && num < 20) {
+            if (num > 10) {
                 return "минут"
             } else {
                 const rem = divideTen(num);
-                if (rem < 10) {
-                    if (rem === 1) {
-                        return "минуту"
-                    } else if (rem > 1 && rem < 5) {
-                        return "минуты"
-                    } else if (rem >= 5 || rem === 0) {
-                        return "минут"
-                    }
+                if (rem === 1) {
+                    return "минуты"
+                } else {
+                    return "минут"
                 }
             }
-            break;
         case "s":
-            if (num > 10 && num < 20) {
+            if (num > 10) {
                 return "секунд"
             } else {
                 const rem = divideTen(num);
-                if (rem < 10) {
-                    if (rem === 1) {
-                        return "секунду"
-                    } else if (rem > 1 && rem < 5) {
-                        return "секунды"
-                    } else if (rem >= 5 || rem === 0) {
-                        return "секунд"
-                    }
+                if (rem === 1) {
+                    return "секунды"
+                } else {
+                    return "секунд"
                 }
             }
-            break;
     }
 
 }

@@ -88,6 +88,13 @@ export class TaskListStore {
         }
     }
 
+    setComplete(itemId: string) {
+        const task = this.taskList.find(task => task.id === itemId)
+        if (task) {
+            task.started = false
+        }
+    }
+
     setPaused(itemId: string) {
         const task = this.taskList.find(task => task.id === itemId)
         if (task) {

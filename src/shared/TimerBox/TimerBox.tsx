@@ -12,6 +12,7 @@ export const TimerBox = observer(() => {
     const [minutes, setMinutes] = useState<number>(0);
     const [seconds, setSeconds] = useState<number>(0);
     const [time, setTime] = useState<number>(settingsStore.pomodoroTime);
+    const [pause, setPause] = useState<number>(0);
     const [started, setStarted] = useState(false);
     const [pausedTime, setPausedTime] = useState(0);
 
@@ -20,6 +21,7 @@ export const TimerBox = observer(() => {
         setCurrentItem(taskListStore.currentItem)
         setPomodoro(1)
         setTime(settingsStore.pomodoroTime)
+
         setMinutes(Math.floor((settingsStore.pomodoroTime / 1000 / 60) % 60));
         setSeconds(Math.floor((settingsStore.pomodoroTime / 1000) % 60));
         setStarted(false)
@@ -52,7 +54,17 @@ export const TimerBox = observer(() => {
 
     React.useEffect(() => {
         let interval: NodeJS.Timer;
+        let timer: NodeJS.Timer;
         if (started && currentItem) {
+            timer = setTimeout(() => {
+                clearInterval(interval);
+                setPause(settingsStore.pausedTime);
+                setStarted(false);
+                taskListStore.setComplete(currentItem.id)
+                if (pomodoro < currentItem.count) {
+                    setPomodoro(pomodoro + 1);
+                }
+            }, time + 1000);
             interval = setInterval(() => {
                 setTime(time - 1000);
             }, 1000);
@@ -60,13 +72,38 @@ export const TimerBox = observer(() => {
 
         return () => {
             clearInterval(interval)
+            clearTimeout(timer)
         };
     }, [currentItem, started, time]);
+
+    React.useEffect(() => {
+        let interval: NodeJS.Timer;
+        let timer: NodeJS.Timer;
+
+        if (started && currentItem) {
+            timer = setTimeout(() => {
+                clearInterval(interval)
+            }, pause + 1000);
+            interval = setInterval(() => {
+                setPause(pause - 1000);
+            }, 1000);
+        }
+
+        return () => {
+            clearInterval(interval)
+            clearTimeout(timer)
+        };
+    }, [currentItem, started, pause]);
 
     React.useEffect(() => {
         setMinutes(Math.floor((time / 1000 / 60) % 60));
         setSeconds(Math.floor((time / 1000) % 60));
     }, [time]);
+
+    React.useEffect(() => {
+        setMinutes(Math.floor((pause / 1000 / 60) % 60));
+        setSeconds(Math.floor((pause / 1000) % 60));
+    }, [pause]);
 
 
     return (
@@ -80,7 +117,7 @@ export const TimerBox = observer(() => {
                     {minutes}:{seconds < 10 ? "0" + seconds : seconds}
                 </div>
                 <div className={styles.taskDesc}>
-                    <span className={styles.taskNum}>Задача 1 - </span>
+                    <span className={styles.taskNum}>Задача {pomodoro} - </span>
                     <span>{currentItem?.description} </span>
                 </div>
                 <div className={styles.buttonGroup}>

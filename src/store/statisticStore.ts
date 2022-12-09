@@ -1,7 +1,9 @@
 import {action, makeAutoObservable, observable} from "mobx";
 import {DaysOfWeek, Period} from "../utils/consts";
+import {makeArrayToChart} from "../utils/makeArrayToChart";
 
-function setStartTime(day: Date, date: number): Date {
+
+export function setStartTime(day: Date, date: number): Date {
     day.setDate(date);
     day.setHours(0);
     day.setMinutes(0);
@@ -11,7 +13,7 @@ function setStartTime(day: Date, date: number): Date {
 
 }
 
-function setEndTime(day: Date, date: number): Date {
+export function setEndTime(day: Date, date: number): Date {
     day.setDate(date);
     day.setHours(23);
     day.setMinutes(59);
@@ -21,21 +23,24 @@ function setEndTime(day: Date, date: number): Date {
 }
 
 export class StatisticStore {
+
     currentPeriod: Period = Period.THIS_WEEK;
     currentDayOfWeek: DaysOfWeek = DaysOfWeek.MONDAY;
-    completeTime: number = 3100;
-    completePomodoro: number = 1;
     startDay: number = 0;
     endDay: number = 0;
+    statisticWeekList: Array<number> = []
+    statisticDayList: Array<ITaskItem> = []
+    taskListStore: any
 
-    constructor() {
+    constructor(taskList: any) {
+        this.taskListStore = taskList
         makeAutoObservable(this, {
             currentPeriod: observable,
             currentDayOfWeek: observable,
-            completeTime: observable,
+            statisticDayList: observable,
+            statisticWeekList: observable,
             endDay: observable,
             startDay: observable,
-            setCompleteTime: action,
             setCurrentPeriod: action,
             setCurrentDayOfWeek: action,
         })
@@ -52,6 +57,9 @@ export class StatisticStore {
                 const endDayNumber = !currentDay.getUTCDay() ? currentDay.getDate() + currentDay.getUTCDay() : currentDay.getDate() + 7 - currentDay.getUTCDay();
                 this.startDay = +setStartTime(startDay, startDayNumber);
                 this.endDay = +setEndTime(startDay, endDayNumber);
+                this.statisticWeekList = makeArrayToChart(this.taskListStore.finishedList, this.startDay)
+                this.statisticDayList = []
+                this.currentDayOfWeek = DaysOfWeek.MONDAY;
                 break
             case Period.LAST_WEEK:
                 const startDayLast = new Date(currentDay.setDate(currentDay.getDate() - 7))
@@ -59,6 +67,9 @@ export class StatisticStore {
                 const endDayNumberLast = !currentDay.getUTCDay() ? currentDay.getDate() + currentDay.getUTCDay() : currentDay.getDate() + 7 - currentDay.getUTCDay();
                 this.startDay = +setStartTime(startDayLast, startDayNumberLast);
                 this.endDay = +setEndTime(startDayLast, endDayNumberLast);
+                this.statisticWeekList = makeArrayToChart(this.taskListStore.finishedList, this.startDay)
+                this.statisticDayList = [];
+                this.currentDayOfWeek = DaysOfWeek.MONDAY;
                 break
             case Period.TWO_WEEK_AGO:
                 const startDayTwoWeek = new Date(currentDay.setDate(currentDay.getDate() - 14))
@@ -66,22 +77,22 @@ export class StatisticStore {
                 const endDayNumberTwoWeek = !currentDay.getUTCDay() ? currentDay.getDate() + currentDay.getUTCDay() : currentDay.getDate() + 7 - currentDay.getUTCDay();
                 this.startDay = +setStartTime(startDayTwoWeek, startDayNumberTwoWeek);
                 this.endDay = +setEndTime(startDayTwoWeek, endDayNumberTwoWeek);
+                this.statisticWeekList = makeArrayToChart(this.taskListStore.finishedList, this.startDay)
+                this.statisticDayList = [];
+                this.currentDayOfWeek = DaysOfWeek.MONDAY;
                 break
         }
     }
 
     setCurrentDayOfWeek(day: DaysOfWeek) {
-        const dayOfWeek = day ? day : 7;
+        const dayOfWeek = day;
         this.currentDayOfWeek = dayOfWeek;
         const currentDay = new Date(this.startDay)
-        const currentDayStart = setStartTime(currentDay, 0)
-        const currentDayEnd = setEndTime(currentDay, 0)
-        console.log("currentDayStart=", currentDayStart, ", currentDayEnd=", currentDayEnd)
-
+        const currentDayStart = +setStartTime(new Date(currentDay), currentDay.getDate() + dayOfWeek)
+        const currentDayEnd = +setEndTime(new Date(currentDay), currentDay.getDate() + dayOfWeek)
+        const statisticDayList = this.taskListStore.finishedList.filter((item: ITaskItem) => item.startDate >= currentDayStart && item.startDate <= currentDayEnd)
+        this.statisticDayList = statisticDayList
     }
 
-    setCompleteTime() {
-        this.completeTime = 10000
-    }
 
 }

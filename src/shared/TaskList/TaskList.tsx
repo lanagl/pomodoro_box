@@ -8,7 +8,7 @@ import {getSumTime} from "../../utils/sumTime";
 
 export const TaskList = observer(() => {
     const [openId, setOpenId] = useState<string>("");
-    const {taskListStore} = useStores()
+    const {taskListStore, settingsStore} = useStores()
     const [filteredList, setFilteredList] = useState<Array<ITaskItem>>([]);
 
     useEffect(() => {
@@ -23,7 +23,7 @@ export const TaskList = observer(() => {
             })}
 
             <div className={styles.total}>
-                {getSumTime(filteredList)}
+                {getSumTime(filteredList, settingsStore.pomodoroTime)}
             </div>
         </div>
     );

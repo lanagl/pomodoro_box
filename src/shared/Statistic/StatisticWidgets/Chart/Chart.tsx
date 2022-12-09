@@ -1,6 +1,6 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import styles from './chart.module.css';
-import {Bar} from "react-chartjs-2";
+import {Bar, getElementAtEvent} from "react-chartjs-2";
 import {useStores} from "../../../../store/use-stores";
 import {observer} from "mobx-react-lite";
 import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip,} from 'chart.js';
@@ -21,19 +21,19 @@ export const options = {
 const labels = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 
 export const Chart = observer(() => {
-    const {taskListStore, statisticStore} = useStores()
-    const [dataset, setDataset] = useState<Array<ITaskItem>>([]);
+    const {statisticStore} = useStores()
     const chartRef = useRef(null)
 
     useEffect(() => {
-        setDataset(taskListStore.finishedList)
-    }, [taskListStore.finishedList]);
+        statisticStore.setCurrentPeriod(statisticStore.currentPeriod)
+    }, [statisticStore.currentPeriod]);
+
 
     const data = {
         labels,
         datasets: [
             {
-                data: [10, 14, 15, 55, 44, 0, 0],
+                data: statisticStore.statisticWeekList,
                 backgroundColor: 'rgba(234, 137, 121, 1)',
                 borderColor: 'rgba(255,99,132,1)',
                 borderWidth: 1,
@@ -44,7 +44,8 @@ export const Chart = observer(() => {
     };
     const onClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
         if (chartRef.current) {
-            //statisticStore.setCurrentDayOfWeek(chartRef.current)
+            const element = getElementAtEvent(chartRef.current, event)
+            statisticStore.setCurrentDayOfWeek(element[0].index)
         }
     }
 

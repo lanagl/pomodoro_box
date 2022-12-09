@@ -1,4 +1,4 @@
-export function getSumTime(array: Array<ITaskItem>): string {
+export function getSumTime(array: Array<ITaskItem>, pomodoroTime: number): string {
     let sum = 0;
     const fieldArray = array.map(item => item.count);
     if (fieldArray.length > 0) {
@@ -7,7 +7,7 @@ export function getSumTime(array: Array<ITaskItem>): string {
         })
     }
 
-    return translateMinToHour(sum * 25)
+    return translateMinToHour(sum * pomodoroTime / (1000 * 60))
 }
 
 function translateMinToHour(num: number): string {

@@ -1,0 +1,15 @@
+.settings {
+	padding: 100px 80px;
+}
+
+.formGroup {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-template-rows: repeat(auto-fill, auto);
+	grid-column-gap: 16px;
+	grid-row-gap: 8px;
+	align-items: center;
+	font-weight: 300;
+	font-size: 16px;
+	line-height: 17px;
+}

@@ -1,44 +1,62 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styles from './buttongroup.module.css';
 import {Button} from "../../Button";
 import {EColor} from "../../../utils/consts";
 import {observer} from "mobx-react-lite";
-import {useStores} from "../../../store/use-stores";
 
 interface IButtonGroupProps {
     isRest?: boolean;
-    handleFinish: () => void;
-    handleStartTimer: () => void;
+    isStarted?: boolean;
+    isPaused?: boolean;
+    onFinish: () => void;
+    onStartTimer: () => void;
+    handlePausedTimer: () => void;
+    onStopRest: () => void;
+    onStartRestTimer: () => void;
 
 }
 
 export const ButtonGroup = observer(({
                                          isRest,
-                                         handleFinish,
-                                         handleStartTimer
+                                         isStarted,
+                                         onFinish,
+                                         isPaused,
+                                         onStartTimer,
+                                         handlePausedTimer,
+                                         onStartRestTimer,
+                                         onStopRest
                                      }: IButtonGroupProps) => {
-    const {taskListStore} = useStores()
-    const [isPaused, setIsPaused] = useState(false);
-    const [isStarted, setIsStarted] = useState(false);
+
+
+    function handleStartRestTimer() {
+        onStartRestTimer()
+    }
 
     return (
         <div className={styles.buttonGroup}>
-            {isRest &&
-				<>
-					<Button color={EColor.green}
-							onClick={handleStartTimer}>{isStarted ? isPaused ? "Продолжить" : "Пауза" : "Старт"}</Button>
-					<Button color={EColor.red} transparent={true}
-							disabled={!isStarted} onClick={handleFinish}>Пропустить</Button>
-				</>
-            }
             {!isRest &&
-				<>
-					<Button color={EColor.green}
-							onClick={handleStartTimer}>{isStarted ? isPaused ? "Продолжить" : "Пауза" : "Старт"}</Button>
-					<Button color={EColor.red} transparent={true}
-							disabled={!isStarted} onClick={handleFinish}>{isStarted ?
+                <>
+                    {isStarted && !isPaused && <Button color={EColor.green}
+                                                       onClick={handlePausedTimer}>Пауза</Button>
+                    }
+                    {isStarted && isPaused && <Button color={EColor.green}
+                                                      onClick={onStartTimer}>Продолжить</Button>
+                    }
+                    {!isStarted && <Button color={EColor.green}
+                                           onClick={onStartTimer}>Старт</Button>
+                    }
+                    <Button color={EColor.red} transparent={true}
+                            disabled={!isStarted} onClick={onFinish}>{isStarted ?
                         isPaused ? "Сделано" : "Стоп" : "Стоп"}</Button>
-				</>
+                </>
+            }
+            {isRest &&
+                <>
+                    <Button color={EColor.green}
+                            onClick={handleStartRestTimer}>{isStarted ? isPaused ? "Продолжить" : "Пауза" : "Старт"}</Button>
+                    <Button color={EColor.red} transparent={true}
+                            disabled={!isStarted} onClick={onStopRest}>Пропустить</Button>
+                </>
             }
 
 

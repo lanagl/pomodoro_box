@@ -13,9 +13,16 @@ export const TimerBox = observer(() => {
     const [minutes, setMinutes] = useState<number>(0);
     const [seconds, setSeconds] = useState<number>(0);
     const [time, setTime] = useState<number>(settingsStore.pomodoroTime);
+    const [rest, setRest] = useState<number>(0);
     const [pausedTime, setPausedTime] = useState(0);
     const [isRest, setIsRest] = useState(false);
+    const [isPaused, setIsPaused] = useState(false);
+    const [isStarted, setIsStarted] = useState(false);
 
+
+    function handlePausedTimer() {
+        setIsPaused(true)
+    }
 
     useEffect(() => {
         setCurrentItem(taskListStore.currentItem)
@@ -24,28 +31,33 @@ export const TimerBox = observer(() => {
 
         setMinutes(Math.floor((settingsStore.pomodoroTime / 1000 / 60) % 60));
         setSeconds(Math.floor((settingsStore.pomodoroTime / 1000) % 60));
-        setStarted(false)
     }, [settingsStore.pomodoroTime, taskListStore.currentItem]);
 
 
     function handleStartTimer() {
-        if (currentItem) {
-            if (!currentItem.started) {
-                taskListStore.setStarted(currentItem.id)
-                setStarted(true)
-            } else if (!currentItem.paused) {
-                taskListStore.setPaused(currentItem.id)
-                setPausedTime(Date.now)
-                setStarted(false)
-            } else {
-                const pauseTime = Date.now() - pausedTime;
-                taskListStore.setResume(currentItem.id, pauseTime)
-                setStarted(true)
+        if (isPaused) {
+            setIsPaused(false)
+        }
+        if (!isStarted) {
+            setIsStarted(true)
+            if (currentItem) {
+                if (!currentItem.started) {
+                    taskListStore.setStarted(currentItem.id)
+                } else if (!currentItem.paused) {
+                    taskListStore.setPaused(currentItem.id)
+                    setPausedTime(Date.now)
+                } else {
+                    const pauseTime = Date.now() - pausedTime;
+                    taskListStore.setResume(currentItem.id, pauseTime)
+                }
             }
         }
+
+
     }
 
     function handleFinish() {
+        setIsStarted(false)
         if (currentItem) {
             taskListStore.setFinished(currentItem.id, settingsStore.pomodoroTime * currentItem.count - time - ((pomodoro - 1) * settingsStore.pomodoroTime))
         }
@@ -55,11 +67,11 @@ export const TimerBox = observer(() => {
     React.useEffect(() => {
         let interval: NodeJS.Timer;
         let timer: NodeJS.Timer;
-        if (started && currentItem) {
+        if (isStarted && !isRest && currentItem) {
             timer = setTimeout(() => {
                 clearInterval(interval);
-                setRest(settingsStore.pausedTime);
-                setStarted(false);
+                setIsStarted(false)
+                setIsRest(true)
                 taskListStore.setComplete(currentItem.id)
                 if (pomodoro < currentItem.count) {
                     setPomodoro(pomodoro + 1);
@@ -74,15 +86,16 @@ export const TimerBox = observer(() => {
             clearInterval(interval)
             clearTimeout(timer)
         };
-    }, [currentItem, started, time]);
+    }, [taskListStore, currentItem, time, pomodoro, settingsStore.pausedTime, isRest, isStarted]);
 
     React.useEffect(() => {
         let interval: NodeJS.Timer;
         let timer: NodeJS.Timer;
 
-        if (started && currentItem) {
+        if (isStarted && isRest && currentItem) {
             timer = setTimeout(() => {
                 clearInterval(interval)
+                setIsStarted(false)
             }, rest + 1000);
             interval = setInterval(() => {
                 setRest(rest - 1000);
@@ -93,7 +106,15 @@ export const TimerBox = observer(() => {
             clearInterval(interval)
             clearTimeout(timer)
         };
-    }, [currentItem, started, rest]);
+    }, [currentItem, rest, isRest, isStarted]);
+
+    useEffect(() => {
+        if (isRest) {
+            setRest(settingsStore.pausedTime);
+        }
+
+    }, [isRest, settingsStore.pausedTime]);
+
 
     React.useEffect(() => {
         setMinutes(Math.floor((time / 1000 / 60) % 60));
@@ -108,6 +129,14 @@ export const TimerBox = observer(() => {
 
     function handleAddTime() {
         setTime(time + 60 * 1000)
+    }
+
+    function handleStopRest() {
+        setIsRest(false)
+    }
+
+    function handleStartRestTimer() {
+        setIsStarted(true)
     }
 
     return (
@@ -127,8 +156,9 @@ export const TimerBox = observer(() => {
                     <span className={styles.taskNum}>Задача {pomodoro} - </span>
                     <span>{currentItem?.description} </span>
                 </div>
-                <ButtonGroup handleFinish={handleFinish} handleStartTimer={handleStartTimer} isRest={isRest}
-                />
+                <ButtonGroup onFinish={handleFinish} onStartTimer={handleStartTimer} isRest={isRest}
+                             onStopRest={handleStopRest} onStartRestTimer={handleStartRestTimer}
+                             handlePausedTimer={handlePausedTimer}/>
             </div>
         </div>
     );

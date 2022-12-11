@@ -6,8 +6,8 @@ export function makeArrayToChart(array: Array<ITaskItem>, startDateTime: number)
         const startDate = new Date(startDateTime)
         const startTime = setStartTime(new Date(startDateTime), startDate.getDate() + i)
         const endTime = setEndTime(new Date(startDateTime), startDate.getDate() + i)
-        newArray.push(array.filter(item => item.startDate > +startTime && item.startDate < +endTime).reduce((acc: number, item: ITaskItem) => {
-            return acc + item.completedTime / (60 * 1000)
+        newArray.push(array.filter((item) => item.startDate > +startTime && item.startDate < +endTime).reduce((acc: number, itemReduce) => {
+            return acc + itemReduce.completedTime / (60 * 1000)
         }, 0))
     }
     return newArray;

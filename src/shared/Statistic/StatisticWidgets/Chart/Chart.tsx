@@ -26,7 +26,7 @@ export const Chart = observer(() => {
 
     useEffect(() => {
         statisticStore.setCurrentPeriod(statisticStore.currentPeriod)
-    }, [statisticStore.currentPeriod]);
+    }, [statisticStore, statisticStore.currentPeriod]);
 
 
     const data = {

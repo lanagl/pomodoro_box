@@ -69,7 +69,7 @@ export const Content = observer(() => {
 
                     </div>
                     <form onSubmit={onSubmit} className={styles.pomodoroForm}>
-                        <input {...register("taskName")} placeholder="Название задачи" className={styles.inputField}/>
+                        <input {...register("taskName")} placeholder="Название задачи" className="inputField"/>
                         {errors?.taskName && <p>{errors.taskName.message}</p>}
                         <Button As={"button"} color={EColor.green} className={styles.submit}>Добавить</Button>
                     </form>

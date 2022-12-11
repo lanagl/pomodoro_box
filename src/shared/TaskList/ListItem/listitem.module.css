@@ -35,3 +35,13 @@
 .menuIcon {
 	cursor: pointer;
 }
+
+.inputFieldInline {
+	padding: 4px 5px;
+	border: none;
+	background-color: var(--background-light-grey);
+	color: var(--text-primary);
+	font-weight: 300;
+	font-size: 16px;
+	line-height: 17px;
+}

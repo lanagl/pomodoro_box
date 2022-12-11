@@ -1,4 +1,4 @@
-import {makeAutoObservable, observable} from "mobx";
+import {action, makeAutoObservable, observable} from "mobx";
 
 export class SettingsStore {
     pausedTime: number = 1 * 10 * 1000;
@@ -8,7 +8,12 @@ export class SettingsStore {
         makeAutoObservable(this, {
             pausedTime: observable,
             pomodoroTime: observable,
-
+            setSettings: action,
         })
+    }
+
+    setSettings(pomodoroTime: number, pauseTime: number) {
+        this.pomodoroTime = pomodoroTime;
+        this.pausedTime = pauseTime;
     }
 }

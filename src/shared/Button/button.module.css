@@ -33,6 +33,18 @@
 	border: 1px solid var(--background-dark-green);
 }
 
+.grey {
+	background-color: var(--background-grey);
+	border: 1px solid var(--background-grey);
+	color: var(--text-button);
+}
+
+.grey:hover {
+	background-color: var(--background-dark-green);
+	border: 1px solid var(--background-dark-green);
+}
+
+
 .tred {
 	border: 1px solid var(--background-red);
 	color: var(--background-red);

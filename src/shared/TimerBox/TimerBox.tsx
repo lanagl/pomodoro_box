@@ -4,6 +4,7 @@ import {Button} from "../Button";
 import {EColor} from "../../utils/consts";
 import {useStores} from "../../store/use-stores";
 import {observer} from "mobx-react-lite";
+import {ButtonGroup} from "./ButtonGroup";
 
 export const TimerBox = observer(() => {
     const {taskListStore, settingsStore} = useStores()
@@ -12,9 +13,8 @@ export const TimerBox = observer(() => {
     const [minutes, setMinutes] = useState<number>(0);
     const [seconds, setSeconds] = useState<number>(0);
     const [time, setTime] = useState<number>(settingsStore.pomodoroTime);
-    const [pause, setPause] = useState<number>(0);
-    const [started, setStarted] = useState(false);
     const [pausedTime, setPausedTime] = useState(0);
+    const [isRest, setIsRest] = useState(false);
 
 
     useEffect(() => {
@@ -58,7 +58,7 @@ export const TimerBox = observer(() => {
         if (started && currentItem) {
             timer = setTimeout(() => {
                 clearInterval(interval);
-                setPause(settingsStore.pausedTime);
+                setRest(settingsStore.pausedTime);
                 setStarted(false);
                 taskListStore.setComplete(currentItem.id)
                 if (pomodoro < currentItem.count) {
@@ -83,9 +83,9 @@ export const TimerBox = observer(() => {
         if (started && currentItem) {
             timer = setTimeout(() => {
                 clearInterval(interval)
-            }, pause + 1000);
+            }, rest + 1000);
             interval = setInterval(() => {
-                setPause(pause - 1000);
+                setRest(rest - 1000);
             }, 1000);
         }
 
@@ -93,7 +93,7 @@ export const TimerBox = observer(() => {
             clearInterval(interval)
             clearTimeout(timer)
         };
-    }, [currentItem, started, pause]);
+    }, [currentItem, started, rest]);
 
     React.useEffect(() => {
         setMinutes(Math.floor((time / 1000 / 60) % 60));
@@ -101,10 +101,14 @@ export const TimerBox = observer(() => {
     }, [time]);
 
     React.useEffect(() => {
-        setMinutes(Math.floor((pause / 1000 / 60) % 60));
-        setSeconds(Math.floor((pause / 1000) % 60));
-    }, [pause]);
+        setMinutes(Math.floor((rest / 1000 / 60) % 60));
+        setSeconds(Math.floor((rest / 1000) % 60));
+    }, [rest]);
 
+
+    function handleAddTime() {
+        setTime(time + 60 * 1000)
+    }
 
     return (
         <div className={styles.timerBox}>
@@ -114,19 +118,17 @@ export const TimerBox = observer(() => {
             </div>
             <div className={styles.timerContent}>
                 <div className={styles.timer}>
-                    {minutes}:{seconds < 10 ? "0" + seconds : seconds}
+                    <div>{minutes}:{seconds < 10 ? "0" + seconds : seconds}</div>
+                    <Button color={EColor.grey} As={'button'} onClick={handleAddTime} className={styles.btnAdd}>
+                        +
+                    </Button>
                 </div>
                 <div className={styles.taskDesc}>
                     <span className={styles.taskNum}>Задача {pomodoro} - </span>
                     <span>{currentItem?.description} </span>
                 </div>
-                <div className={styles.buttonGroup}>
-                    <Button color={EColor.green}
-                            onClick={handleStartTimer}>{currentItem?.started ? currentItem.paused ? "Продолжить" : "Пауза" : "Старт"}</Button>
-                    <Button color={EColor.red} transparent={true}
-                            disabled={!currentItem?.started} onClick={handleFinish}>{currentItem?.started ?
-                        currentItem.paused ? "Сделано" : "Стоп" : "Стоп"}</Button>
-                </div>
+                <ButtonGroup handleFinish={handleFinish} handleStartTimer={handleStartTimer} isRest={isRest}
+                />
             </div>
         </div>
     );

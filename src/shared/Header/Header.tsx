@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './header.module.css';
 import {ReactComponent as Pomodoro} from '../../images/pomodoro.svg';
 import {ReactComponent as Statistic} from '../../images/statistic.svg';
+import {ReactComponent as Settings} from '../../images/settings.svg';
 import {ReactComponent as Home} from '../../images/home.svg';
 import {Link, NavLink} from "react-router-dom";
 
@@ -23,6 +24,10 @@ export function Header() {
                 <NavLink className={styles.navLink} to={"/statistic"} activeClassName={styles.active}>
                     <Statistic width={24}/>
                     <span>Статистика</span>
+                </NavLink>
+                <NavLink className={styles.navLink} to={"/settings"} activeClassName={styles.active}>
+                    <Settings width={24}/>
+                    <span>Настройки</span>
                 </NavLink>
             </div>
         </div>

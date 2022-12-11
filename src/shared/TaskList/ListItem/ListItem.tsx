@@ -60,7 +60,8 @@ export function ListItem({item, handleToggleOpen, openId}: IListItem) {
             <div className={styles.taskInfo}>
                 <span className={styles.count}>{item.count}</span>
 
-                {isEdit && <input type="text" value={itemDescription} onChange={handleChange}/>}
+                {isEdit && <input type="text" value={itemDescription} onChange={handleChange}
+								  className={styles.inputFieldInline}/>}
                 {!isEdit && <span className={styles.description}>{itemDescription}</span>}
 
             </div>

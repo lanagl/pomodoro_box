@@ -6,6 +6,7 @@ import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import {NoMatch} from "./shared/NoMatch";
 import {Statistic} from "./shared/Statistic";
 import {Content} from "./shared/Content";
+import {Settings} from "./shared/Settings";
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
                     <Redirect to={"/home"} from={"/"} exact/>
                     <Route path="/home" component={Content}/>
                     <Route path="/statistic" component={Statistic}/>
+                    <Route path="/settings" component={Settings}/>
                     <Route component={NoMatch}/>
                 </Switch>
 

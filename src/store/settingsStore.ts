@@ -2,10 +2,10 @@ import {action, makeAutoObservable, observable} from "mobx";
 import {Theme} from "../utils/consts";
 
 export class SettingsStore {
-    pausedTime: number = 1 * 10 * 1000;
+    pausedTime: number = 3 * 60 * 1000;
 
-    largePauseTime: number = 2 * 10 * 1000;
-    pomodoroTime: number = 2 * 10 * 1000;
+    largePauseTime: number = 15 * 60 * 1000;
+    pomodoroTime: number = 25 * 60 * 1000;
     theme: Theme = Theme.LIGHT
 
 

@@ -1,0 +1,7 @@
+.wrapper {
+	background-color: #FFFFFF;
+}
+
+.inverse {
+	filter: invert(100%);
+}

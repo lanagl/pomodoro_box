@@ -23,3 +23,8 @@ export enum DaysOfWeek {
     SATURDAY = 5,
     SUNDAY = 6
 }
+
+export enum Theme {
+    LIGHT = "LIGHT",
+    DARK = "DARK"
+}

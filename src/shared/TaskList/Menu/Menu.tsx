@@ -17,9 +17,10 @@ interface IMenuProps {
     id: string;
     onClose?: () => void
     onEdit?: () => void
+    onDelete?: () => void
 }
 
-export function Menu({left, top, onClose = noop, id, onEdit = noop}: IMenuProps) {
+export function Menu({left, top, onClose = noop, id, onEdit = noop, onDelete = noop}: IMenuProps) {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
     const {taskListStore} = useStores()
@@ -59,7 +60,7 @@ export function Menu({left, top, onClose = noop, id, onEdit = noop}: IMenuProps)
 
     if (isDeleteModalOpen) {
         return createPortal((
-            <DeleteModal onDelete={() => taskListStore.deleteItem(id)} onClose={onClose}/>), node)
+            <DeleteModal onDelete={onDelete} onClose={onClose}/>), node)
     } else {
         return createPortal((
             <div className={styles.menuContainer} ref={ref}>

@@ -9,6 +9,7 @@ import {ReactComponent as AlarmClock} from "../../../images/alarm-clock.svg";
 import {observer} from "mobx-react-lite";
 import {useStores} from "../../../store/use-stores";
 import {BottomWidget} from "./BottomWidget";
+import {ITaskItem} from "../../../../types/TaskItem";
 
 
 export const StatisticWidgets = observer(() => {
@@ -35,6 +36,7 @@ export const StatisticWidgets = observer(() => {
 
         const stopped = statisticStore.statisticDayList.reduce((acc: number, item: ITaskItem) => acc + item.pauseCount, 0)
         setStopped(stopped)
+
         const completePomodoroCount = statisticStore.statisticDayList.reduce((acc: number, item: ITaskItem) => acc + item.finishedPomodoro, 0)
         setCompletePomodoro(completePomodoroCount)
         const completeTimeTask = statisticStore.statisticDayList.reduce((acc: number, item: ITaskItem) => acc + item.completedTime, 0)

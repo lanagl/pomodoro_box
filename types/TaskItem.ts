@@ -1,4 +1,4 @@
-interface ITaskItem {
+export interface ITaskItem {
     id: string;
     count: number;
     description: string;
@@ -11,4 +11,6 @@ interface ITaskItem {
     pauseCount: number;
     pauseTime: number;
     finishedPomodoro: number;
+    isAdded: boolean;
+    isDeleted: boolean;
 }

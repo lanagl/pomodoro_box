@@ -56,3 +56,9 @@ a:hover {
 .navLink:hover path {
 	fill: var(--text-red-hover);
 }
+
+.btn {
+	border: none;
+	background: transparent;
+	cursor: pointer;
+}

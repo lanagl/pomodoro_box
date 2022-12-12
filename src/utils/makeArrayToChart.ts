@@ -1,4 +1,5 @@
 import {setEndTime, setStartTime} from "../store/statisticStore";
+import {ITaskItem} from "../../types/TaskItem";
 
 export function makeArrayToChart(array: Array<ITaskItem>, startDateTime: number): Array<number> {
     const newArray: Array<number> = [];

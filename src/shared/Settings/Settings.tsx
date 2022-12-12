@@ -9,6 +9,7 @@ export const Settings = observer(() => {
     const {settingsStore} = useStores()
     const [pomodoroTime, setPomodoroTime] = useState<number>(settingsStore.pomodoroTime / 1000);
     const [pausedTime, setPausedTime] = useState<number>(settingsStore.pausedTime / 1000);
+    const [largePauseTime, setLargePausedTime] = useState<number>(settingsStore.largePauseTime / 1000);
 
     useEffect(() => {
         setPausedTime(settingsStore.pausedTime / 1000)
@@ -18,10 +19,14 @@ export const Settings = observer(() => {
         setPomodoroTime(settingsStore.pomodoroTime / 1000)
     }, [settingsStore.pomodoroTime])
 
+    useEffect(() => {
+        setLargePausedTime(settingsStore.largePauseTime / 1000)
+    }, [settingsStore.largePauseTime])
+
     function handleSubmit(e: FormEvent) {
         e.preventDefault()
         console.log("handleSubmit")
-        settingsStore.setSettings(pomodoroTime * 1000, pausedTime * 1000)
+        settingsStore.setSettings(pomodoroTime * 1000, pausedTime * 1000, largePauseTime * 1000)
     }
 
     const handleSetPomodoroTime = (e: ChangeEvent<HTMLInputElement>) => {
@@ -30,6 +35,9 @@ export const Settings = observer(() => {
 
     const handleSetPausedTime = (e: ChangeEvent<HTMLInputElement>) => {
         setPausedTime(parseInt(e.target.value))
+    }
+    const handleSetLargePausedTime = (e: ChangeEvent<HTMLInputElement>) => {
+        setLargePausedTime(parseInt(e.target.value))
     }
 
     return (
@@ -44,6 +52,10 @@ export const Settings = observer(() => {
                     <label htmlFor="pausedTime">Интервал паузы между помидорами, сек</label>
                     <input name="pausedTime" value={pausedTime} className="inputField"
                            onChange={handleSetPausedTime}/>
+
+                    <label htmlFor="largePauseTime">Интервал паузы после 4 помидора, сек</label>
+                    <input name="largePauseTime" value={largePauseTime} className="inputField"
+                           onChange={handleSetLargePausedTime}/>
 
                     <Button color={EColor.green} As={"button"}>
                         Сохранить

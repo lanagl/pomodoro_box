@@ -15,6 +15,10 @@ code {
 	monospace;
 }
 
+#root {
+	background-color: #FFFFFF;
+}
+
 .inputField {
 	padding: 19px 15px;
 	border: none;

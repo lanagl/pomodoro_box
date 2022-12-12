@@ -1,6 +1,7 @@
 import {action, makeAutoObservable, observable} from "mobx";
 import {DaysOfWeek, Period} from "../utils/consts";
 import {makeArrayToChart} from "../utils/makeArrayToChart";
+import {ITaskItem} from "../../types/TaskItem";
 
 
 export function setStartTime(day: Date, date: number): Date {

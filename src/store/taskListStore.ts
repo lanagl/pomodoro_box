@@ -1,4 +1,5 @@
 import {action, computed, makeAutoObservable, observable} from "mobx";
+import {ITaskItem} from "../../types/TaskItem";
 
 export class TaskListStore {
     taskList: Array<ITaskItem> = []
@@ -111,12 +112,12 @@ export class TaskListStore {
         }
     }
 
-    setFinished(itemId: string, time: number) {
+    setFinished(itemId: string, time: number, completedPomodoro: number) {
         const task = this.taskList.find(task => task.id === itemId)
         if (task) {
             task.finish = true
             task.completedTime = time
-            task.finishedPomodoro = task.finishedPomodoro + 1
+            task.finishedPomodoro = task.finishedPomodoro + completedPomodoro
         }
         this.getFilteredList()
         this.getFinishedList()

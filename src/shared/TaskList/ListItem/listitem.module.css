@@ -5,6 +5,8 @@
 	border-top: 1px solid var(--border-E4);
 	border-bottom: 1px solid var(--border-E4);
 	padding: 15px 0;
+	opacity: 1;
+	transition: opacity 500ms ease-in;
 }
 
 .taskInfo {
@@ -44,4 +46,12 @@
 	font-weight: 300;
 	font-size: 16px;
 	line-height: 17px;
+}
+
+.isAdded {
+	opacity: 0;
+}
+
+.isDeleted {
+	opacity: 0;
 }

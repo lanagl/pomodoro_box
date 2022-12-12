@@ -9,6 +9,7 @@ import {observer} from "mobx-react-lite";
 import {generateId} from "../../utils/generateRandomIndex";
 import {useStores} from "../../store/use-stores";
 import {getMaxOrder} from "../../utils/getMax";
+import {ITaskItem} from "../../../types/TaskItem";
 
 type FormValues = {
     taskName: string;
@@ -30,6 +31,7 @@ const resolver: Resolver<FormValues> = async (values) => {
 export const Content = observer(() => {
     const {register, resetField, handleSubmit, formState: {errors}} = useForm<FormValues>({resolver});
     const onSubmit = handleSubmit((data) => {
+
         const item: Omit<ITaskItem, 'id'> = {
             description: data.taskName,
             finish: false,
@@ -41,6 +43,8 @@ export const Content = observer(() => {
             completedTime: 0,
             finishedPomodoro: 0,
             startDate: Date.now(),
+            isAdded: true,
+            isDeleted: false,
             order: getMaxOrder(taskListStore.taskList) + 1
         }
         taskListStore.addItem(generateId(item));

@@ -7,21 +7,25 @@ import {NoMatch} from "./shared/NoMatch";
 import {Statistic} from "./shared/Statistic";
 import {Content} from "./shared/Content";
 import {Settings} from "./shared/Settings";
+import {Wrapper} from "./shared/Wrapper";
 
 function App() {
     return (
         <BrowserRouter>
-            <Layout>
-                <Header/>
-                <Switch>
-                    <Redirect to={"/home"} from={"/"} exact/>
-                    <Route path="/home" component={Content}/>
-                    <Route path="/statistic" component={Statistic}/>
-                    <Route path="/settings" component={Settings}/>
-                    <Route component={NoMatch}/>
-                </Switch>
+            <Wrapper>
+                <Layout>
+                    <Header/>
+                    <Switch>
+                        <Redirect to={"/home"} from={"/"} exact/>
+                        <Route path="/home" component={Content}/>
+                        <Route path="/statistic" component={Statistic}/>
+                        <Route path="/settings" component={Settings}/>
+                        <Route component={NoMatch}/>
+                    </Switch>
 
-            </Layout>
+                </Layout>
+            </Wrapper>
+
         </BrowserRouter>
     );
 }

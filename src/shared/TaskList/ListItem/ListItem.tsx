@@ -1,14 +1,16 @@
-import React, {ChangeEvent, useRef, useState} from 'react';
+import React, {ChangeEvent, useEffect, useRef, useState} from 'react';
 import styles from './listitem.module.css';
 import {ReactComponent as MenuIcon} from "../../../images/menu.svg";
 import {ReactComponent as SaveIcon} from "../../../images/save.svg";
 import {Menu} from "../Menu";
 import {useStores} from "../../../store/use-stores";
+import {ITaskItem} from "../../../../types/TaskItem";
+import classNames from "classnames";
 
 interface IListItem {
     item: ITaskItem;
     openId: string;
-    handleToggleOpen: (id: string) => void
+    handleToggleOpen: (id: string) => void;
 }
 
 type TPosition = {
@@ -23,6 +25,14 @@ export function ListItem({item, handleToggleOpen, openId}: IListItem) {
     const [isEdit, setIsEdit] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
     const {taskListStore} = useStores()
+
+    useEffect(() => {
+
+        if (item.isAdded) {
+            const itemTmp = {...item, isAdded: false}
+            taskListStore.editItem(itemTmp)
+        }
+    }, [item])
 
     function handleOpen() {
         if (ref.current) {
@@ -55,8 +65,24 @@ export function ListItem({item, handleToggleOpen, openId}: IListItem) {
         setItemDescription(event.target?.value)
     }
 
+    function handleDelete() {
+        const itemTmp = {...item, isDeleted: true}
+        taskListStore.editItem(itemTmp);
+        const timer = setTimeout(() => {
+            taskListStore.deleteItem(item.id)
+            clearTimeout(timer)
+        }, 700)
+
+    }
+
     return (
-        <div className={styles.listItem} ref={ref}>
+        <div
+            className={classNames(
+                styles.listItem,
+                {[styles.isAdded]: item.isAdded},
+                {[styles.isDeleted]: item.isDeleted},
+            )}
+            ref={ref}>
             <div className={styles.taskInfo}>
                 <span className={styles.count}>{item.count}</span>
 
@@ -71,7 +97,7 @@ export function ListItem({item, handleToggleOpen, openId}: IListItem) {
 				<MenuIcon width={26} onClick={handleOpen} className={styles.menuIcon}/>}
             {openId === item.id &&
 				<Menu left={position.left} top={position.top} id={item.id}
-					  onClose={() => handleToggleOpen("")} onEdit={handleEdit}/>
+					  onClose={() => handleToggleOpen("")} onEdit={handleEdit} onDelete={handleDelete}/>
             }
 
         </div>

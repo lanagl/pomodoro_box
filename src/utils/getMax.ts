@@ -1,3 +1,5 @@
+import {ITaskItem} from "../../types/TaskItem";
+
 export function getMaxOrder(array: Array<ITaskItem>): number {
     let max = 0;
     const fieldArray = array.map(item => item.order);

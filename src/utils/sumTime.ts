@@ -1,3 +1,5 @@
+import {ITaskItem} from "../../types/TaskItem";
+
 export function getSumTime(array: Array<ITaskItem>, pomodoroTime: number): string {
     let sum = 0;
     const fieldArray = array.map(item => item.count);
